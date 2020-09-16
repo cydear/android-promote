@@ -19,7 +19,7 @@ import dalvik.system.DexClassLoader;
 
 public class PluginActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "plugin.log";
-    private final static String EXTRACT_FILE_NAME = "plugin-debug.apk";
+    private final static String EXTRACT_FILE_NAME = "plugin1.apk";
     private Button btnLoadPlugin;
 
     public static void startToPluginActivity(Context context) {

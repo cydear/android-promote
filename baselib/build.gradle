@@ -27,15 +27,27 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 }
 
-//task clearJar(type: Delete) {
-//    delete 'build/outputs/baselib.jar'
-//}
-//
-//task makeJar(type: Copy) {
-//    from('build/intermediates/compile_library_classes_jar/debug/')
-//    into('build/outputs/')
-//    include('classes.jar')
-//    rename('classes.jar', 'baselib.jar')
-//}
-//
-//makeJar.dependsOn(clearJar, build)
+/**
+ * 生成jar 并将jar包copy至插件下的lib目录
+ */
+task clearJar(type: Delete) {
+    def targetPath = "$rootDir/plugin/lib"
+    def targetFile = new File(targetPath)
+    if (!targetFile.exists()) {
+        targetFile.mkdir()
+    }
+    //删除之前的lib包
+    delete targetPath + '/baselib.jar'
+}
+
+task makeJar(type: Copy) {
+    def targetPath = "$rootDir/plugin/lib/"
+    //jar文件来源
+    from('build/intermediates/aar_main_jar/debug/')
+    //生成路劲
+    into(targetPath)
+    include('classes.jar')
+    rename('classes.jar', 'baselib.jar')
+}
+
+makeJar.dependsOn(clearJar, build)
