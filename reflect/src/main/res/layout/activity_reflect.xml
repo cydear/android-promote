@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_hook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook 代码" />
+
+        <Button
+            android:id="@+id/btn_start_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="跳转至第二个页面" />
+
+        <Button
+            android:id="@+id/btn_hook_pm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook PackageManager" />
+
+        <Button
+            android:id="@+id/btn_hook_instrumentation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook Instrumentation" />
+
+        <Button
+            android:id="@+id/btn_hook_taskmanager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook ActivityTaskManager" />
+
+        <Button
+            android:id="@+id/btn_hook_mh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook ActivityThread mH Callback" />
+
+        <Button
+            android:id="@+id/btn_hook_instr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook Instrumentation NewActivity" />
+
+        <Button
+            android:id="@+id/btn_hook_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="跳转至TargetActivity(未注册)" />
+    </LinearLayout>
+
+</ScrollView>

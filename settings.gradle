@@ -1,0 +1,8 @@
+include ':plugin'
+include ':baselib'
+include ':coreplugin'
+include ':reflect'
+include ':binder'
+include ':datastruct'
+include ':app'
+rootProject.name = "android-promote"
