@@ -18,6 +18,13 @@
             android:layout_marginTop="10dip"
             android:text="加载插件" />
 
+        <Button
+            android:id="@+id/btn_application"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Application插件化" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -2,6 +2,7 @@
     package="com.code.plugin">
 
     <application
+        android:name=".impl.CorePluginApp"
         android:allowBackup="true"
         android:supportsRtl="true">
 

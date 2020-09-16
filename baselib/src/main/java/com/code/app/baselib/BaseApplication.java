@@ -1,7 +1,6 @@
 package com.code.app.baselib;
 
 import android.app.Application;
-import android.content.Context;
 
 /**
  * @ClassName App
@@ -11,7 +10,7 @@ import android.content.Context;
  * @Description: TODO
  */
 public class BaseApplication extends Application {
-    private static Context mInstance;
+    private static Application mInstance;
 
     @Override
     public void onCreate() {
@@ -19,7 +18,7 @@ public class BaseApplication extends Application {
         mInstance = this;
     }
 
-    public static Context get() {
+    public static Application get() {
         return mInstance;
     }
 }

@@ -2,6 +2,7 @@ package com.code.app.coreplugin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.code.app.baselib.BaseApplication;
 import com.code.app.baselib.ICallback;
 import com.code.app.baselib.IMessage;
 import com.code.app.baselib.IPerson;
+import com.code.app.coreplugin.data.PluginItem;
+import com.code.app.coreplugin.plugin.PluginManager;
 
 import java.io.File;
 
@@ -20,7 +24,7 @@ import dalvik.system.DexClassLoader;
 public class PluginActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "plugin.log";
     private final static String EXTRACT_FILE_NAME = "plugin1.apk";
-    private Button btnLoadPlugin;
+    private Button btnLoadPlugin, btnApplication;
 
     public static void startToPluginActivity(Context context) {
         Intent intent = new Intent(context, PluginActivity.class);
@@ -33,8 +37,10 @@ public class PluginActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_plugin);
 
         btnLoadPlugin = findViewById(R.id.btn_load);
+        btnApplication = findViewById(R.id.btn_application);
 
         btnLoadPlugin.setOnClickListener(this);
+        btnApplication.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +48,32 @@ public class PluginActivity extends AppCompatActivity implements View.OnClickLis
         int _id = v.getId();
         if (_id == R.id.btn_load) {
             loadPlugin();
+        } else if (_id == R.id.btn_application) {
+            applicationPlugin();
+            //PluginManager.init(BaseApplication.get());
+        }
+    }
+
+    /**
+     * application插件化
+     */
+    private void applicationPlugin() {
+        //PluginManager.init(BaseApplication.get());
+        for (PluginItem item : PluginManager.plugins) {
+            if (item.getPackageInfo() == null || item.getPackageInfo().applicationInfo == null) {
+                continue;
+            }
+            String className = item.getPackageInfo().applicationInfo.className;
+            try {
+                Class clazz = PluginManager.mNowClassLoader.loadClass(className);
+                Application application = (Application) clazz.newInstance();
+                if (application != null) {
+                    application.onCreate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("plugin.log", "application onCreate e =>" + e);
+            }
         }
     }
 
@@ -61,6 +93,7 @@ public class PluginActivity extends AppCompatActivity implements View.OnClickLis
         }
         String dexPath = extractFile.getPath();
         File fileRelease = getDir("dex", 0);
+        Log.d(TAG, "dexPath =>" + dexPath);
         ClassLoader classLoader = new DexClassLoader(dexPath, fileRelease.getAbsolutePath(), null, getClassLoader());
         Class mLoadClassBean = null;
         try {

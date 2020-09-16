@@ -1,7 +1,8 @@
 package com.code.app;
 
 import com.code.app.baselib.BaseApplication;
-import com.code.app.coreplugin.Utils;
+import com.code.app.coreplugin.plugin.PluginManager;
+import com.code.app.coreplugin.util.Utils;
 
 /**
  * @ClassName App
@@ -14,6 +15,7 @@ public class App extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.extractAssets(this, "plugin1.apk");
+        //Utils.extractAssets(this, "plugin1.apk");
+        PluginManager.init(this);
     }
 }

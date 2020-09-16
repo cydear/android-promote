@@ -1,4 +1,4 @@
-package com.code.app.coreplugin;
+package com.code.app.coreplugin.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
