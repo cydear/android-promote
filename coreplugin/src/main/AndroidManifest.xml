@@ -4,6 +4,8 @@
 
     <application>
         <activity android:name=".PluginActivity"></activity>
+
+        <activity android:name=".resource.ResourceActivity" />
     </application>
 
 </manifest>

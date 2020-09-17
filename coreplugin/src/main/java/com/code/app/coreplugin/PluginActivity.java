@@ -16,6 +16,7 @@ import com.code.app.baselib.IMessage;
 import com.code.app.baselib.IPerson;
 import com.code.app.coreplugin.data.PluginItem;
 import com.code.app.coreplugin.plugin.PluginManager;
+import com.code.app.coreplugin.resource.ResourceActivity;
 
 import java.io.File;
 
@@ -24,7 +25,7 @@ import dalvik.system.DexClassLoader;
 public class PluginActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "plugin.log";
     private final static String EXTRACT_FILE_NAME = "plugin1.apk";
-    private Button btnLoadPlugin, btnApplication;
+    private Button btnLoadPlugin, btnApplication, btnFace;
 
     public static void startToPluginActivity(Context context) {
         Intent intent = new Intent(context, PluginActivity.class);
@@ -38,9 +39,11 @@ public class PluginActivity extends AppCompatActivity implements View.OnClickLis
 
         btnLoadPlugin = findViewById(R.id.btn_load);
         btnApplication = findViewById(R.id.btn_application);
+        btnFace = findViewById(R.id.btn_face);
 
         btnLoadPlugin.setOnClickListener(this);
         btnApplication.setOnClickListener(this);
+        btnFace.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +54,8 @@ public class PluginActivity extends AppCompatActivity implements View.OnClickLis
         } else if (_id == R.id.btn_application) {
             applicationPlugin();
             //PluginManager.init(BaseApplication.get());
+        } else if (_id == R.id.btn_face) {
+            ResourceActivity.startToResourceActivity(this);
         }
     }
 

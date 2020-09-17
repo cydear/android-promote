@@ -25,6 +25,13 @@
             android:layout_marginTop="10dip"
             android:text="Application插件化" />
 
+        <Button
+            android:id="@+id/btn_face"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="插件换肤" />
+
     </LinearLayout>
 
 </ScrollView>

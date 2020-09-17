@@ -1,3 +1,5 @@
+include ':plugin3'
+include ':plugin2'
 include ':plugin'
 include ':baselib'
 include ':coreplugin'

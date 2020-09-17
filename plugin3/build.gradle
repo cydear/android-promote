@@ -1,0 +1,59 @@
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation project(path: ':baselib')
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        if (variant.name == "debug") {
+            //源生成的apk文件
+            File originFile = output.outputFile
+            //拷贝的目的地址
+            String targetPath = "$rootDir/coreplugin/src/main/assets"
+            try {
+                //如果目的地址不存在，则手动创建
+                def targetFile = new File(targetPath)
+                if (!targetFile.exists()) {
+                    targetFile.mkdir()
+                }
+                //复制apk文件到coreplugin的assets目录
+                copy {
+                    from originFile
+                    into targetPath
+                    //重命名Apk文件名
+                    rename {
+                        "plugin3.apk"
+                    }
+                }
+            } catch (Exception e) {
+                println "build fail =>" + e
+            }
+        }
+    }
+}
