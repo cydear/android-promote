@@ -18,8 +18,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_reflect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ReflectMainActivity.startToReflectMainActivity(MainActivity.this);
-                BaseDexClassLoaderHookHelper.init(App.get());
+                ReflectMainActivity.startToReflectMainActivity(MainActivity.this);
             }
         });
         findViewById(R.id.btn_plugin).setOnClickListener(new View.OnClickListener() {

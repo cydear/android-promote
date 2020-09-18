@@ -69,12 +69,12 @@ public class BaseDexClassLoaderHookHelper {
         //构建一个新数组用来替换原来的数组
         Object[] newElements = (Object[]) Array.newInstance(elementClazz, dexElements.length + 1);
         //构建插件Element(File file, boolean isDirectory, File zip, DexFile dexFile)
-        Class[] paramsType = {File.class, boolean.class, File.class, DexFile.class};
-        Object[] paramsValue = {apkFile, false, apkFile, DexFile.loadDex(
+        Class[] paramsType = {DexFile.class, File.class};
+        Object[] paramsValue = {DexFile.loadDex(
                 apkFile.getCanonicalPath(),
                 optDexFile.getAbsolutePath(),
                 0
-        )};
+        ), apkFile};
         Constructor elementCtr = elementClazz.getDeclaredConstructor(paramsType);
         elementCtr.setAccessible(true);
         Object newElement = elementCtr.newInstance(paramsValue);

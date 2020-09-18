@@ -18,6 +18,6 @@ public class App extends BaseApplication {
         super.onCreate();
         //Utils.extractAssets(this, "plugin1.apk");
         //PluginManager.init(this);
-        //BaseDexClassLoaderHookHelper.init(this);
+        BaseDexClassLoaderHookHelper.init(this);
     }
 }

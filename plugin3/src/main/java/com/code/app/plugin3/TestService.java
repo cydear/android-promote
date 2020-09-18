@@ -22,7 +22,7 @@ public class TestService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("plugin.log", "TestService 启动了");
+        Log.d("plugin.log", "TestService3 启动了");
         return super.onStartCommand(intent, flags, startId);
     }
 
