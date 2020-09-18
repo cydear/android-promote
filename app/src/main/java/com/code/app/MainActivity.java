@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.code.app.coreplugin.PluginActivity;
+import com.code.app.coreplugin.plugin.BaseDexClassLoaderHookHelper;
 import com.code.reflect.ReflectMainActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_reflect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReflectMainActivity.startToReflectMainActivity(MainActivity.this);
+                //ReflectMainActivity.startToReflectMainActivity(MainActivity.this);
+                BaseDexClassLoaderHookHelper.init(App.get());
             }
         });
         findViewById(R.id.btn_plugin).setOnClickListener(new View.OnClickListener() {

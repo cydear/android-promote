@@ -1,5 +1,6 @@
 package com.code.reflect;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.code.reflect.proxy.AMSHookHelper;
 import com.code.reflect.proxy.HookHelper;
+import com.code.reflect.service.StubService1;
 
 /**
  * @ClassName ReflectMainActivity
@@ -84,6 +86,30 @@ public class ReflectMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ReflectMainActivity.this, TargetActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.btn_hook_ams).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AMSHookHelper.hookActivityManagerService();
+            }
+        });
+
+        findViewById(R.id.btn_start_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReflectMainActivity.this, StubService1.class);
+                startService(intent);
+            }
+        });
+
+        findViewById(R.id.btn_start_plugin_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.code.app.plugin3", "com.code.app.plugin3.TestService"));
+                startService(intent);
             }
         });
     }

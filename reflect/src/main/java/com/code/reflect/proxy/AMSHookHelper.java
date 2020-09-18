@@ -2,8 +2,10 @@ package com.code.reflect.proxy;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.code.app.baselib.BaseApplication;
 import com.code.reflect.SubActivity;
 
 import java.lang.reflect.Field;
@@ -52,6 +54,9 @@ public class AMSHookHelper {
         }
     }
 
+    /**
+     * 代理IActivityTaskManager的具体实现类
+     */
     private static class ActivityTaskManagerHandler implements InvocationHandler {
         private Object mBase;
 
@@ -93,6 +98,83 @@ public class AMSHookHelper {
 
                 Log.d(TAG, "hook method =>" + method.getName() + " 注入成功");
                 return method.invoke(mBase, args);
+            }
+            return method.invoke(mBase, args);
+        }
+    }
+
+    /**
+     * hook activity manager service
+     */
+    public static void hookActivityManagerService() {
+        try {
+            //获取ActivityManager
+            Class<?> activityManagerClazz = Class.forName("android.app.ActivityManager");
+            //获取IActivityManagerSingleton
+            Field iActivityManagerSingletonField = activityManagerClazz.getDeclaredField("IActivityManagerSingleton");
+            iActivityManagerSingletonField.setAccessible(true);
+            //Singleton<IActivityManager> 对象
+            Object iActivityManagerSingleton = iActivityManagerSingletonField.get(null);
+            //获取Singleton 中mInstance
+            Class<?> singletonClazz = Class.forName("android.util.Singleton");
+            Field mInstanceField = singletonClazz.getDeclaredField("mInstance");
+            mInstanceField.setAccessible(true);
+            //mInstance对象
+            Object mInstance = mInstanceField.get(iActivityManagerSingleton);
+            //IActivityManager
+            Class<?> iActivityManager = Class.forName("android.app.IActivityManager");
+            //设置代理对象
+            Object proxy = Proxy.newProxyInstance(
+                    Thread.currentThread().getContextClassLoader(),
+                    new Class[]{iActivityManager},
+                    new ActivityManagerHandler(mInstance)
+            );
+            mInstanceField.set(iActivityManagerSingleton, proxy);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "hookActivityManagerService e =>" + e);
+        }
+    }
+
+    /**
+     * ActivityManager代理
+     */
+    private static class ActivityManagerHandler implements InvocationHandler {
+        private Object mBase;
+
+        public ActivityManagerHandler(Object obj) {
+            this.mBase = obj;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            Log.d(TAG, "ActivityManagerHandler Hook方法调用");
+            if ("startService".equals(method.getName())) {
+                Log.d(TAG, "ActivityManagerHandler method =>" + method.getName() + " 调用了");
+
+                Intent raw;
+                int index = 0;
+
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i] instanceof Intent) {
+                        index = i;
+                        break;
+                    }
+                }
+                raw = (Intent) args[index];
+
+                //启动的插件service的包名
+                String pluginServiceName = raw.getComponent().getClassName();
+                Log.d(TAG, "ActivityManagerHandler pluginServiceName =>" + pluginServiceName);
+                String subServiceName = BaseApplication.servicePlugins.get(pluginServiceName);
+                if (!TextUtils.isEmpty(subServiceName)) {
+                    ComponentName componentName = new ComponentName("com.code.app", subServiceName);
+                    //创建替身Intent
+                    Intent newIntent = new Intent();
+                    newIntent.setComponent(componentName);
+                    //替换掉Intent,达到欺骗目的
+                    args[index] = newIntent;
+                }
             }
             return method.invoke(mBase, args);
         }

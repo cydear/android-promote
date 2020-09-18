@@ -121,6 +121,7 @@ public class ResourceActivity extends BaseResourceActivity {
      * @des TODO 不需要使用UiUtil进行操作
      */
     private void changeThemeNew(PluginInfo pluginInfo) {
+        Log.d("plugin.log", "activity classloader =>" + getClassLoader());
         if (pluginInfo == null) {
             return;
         }

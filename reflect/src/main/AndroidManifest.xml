@@ -8,6 +8,8 @@
             android:name=".SeconActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ReflectMainActivity" />
+
+        <service android:name=".service.StubService1" />
     </application>
 
 </manifest>

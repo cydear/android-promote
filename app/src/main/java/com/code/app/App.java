@@ -1,6 +1,7 @@
 package com.code.app;
 
 import com.code.app.baselib.BaseApplication;
+import com.code.app.coreplugin.plugin.BaseDexClassLoaderHookHelper;
 import com.code.app.coreplugin.plugin.PluginManager;
 import com.code.app.coreplugin.util.Utils;
 
@@ -16,6 +17,7 @@ public class App extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         //Utils.extractAssets(this, "plugin1.apk");
-        PluginManager.init(this);
+        //PluginManager.init(this);
+        //BaseDexClassLoaderHookHelper.init(this);
     }
 }

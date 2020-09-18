@@ -13,7 +13,9 @@ import com.code.app.coreplugin.util.DLUtils;
 import com.code.app.coreplugin.util.Utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,6 +112,12 @@ public class PluginManager {
             DexClassLoader dexClassLoader = new DexClassLoader(item.getPluginPath(),
                     dexOutputPath, null, mBaseClassLoader);
             classLoader.addPluginClassLoader(dexClassLoader);
+//            try {
+//                BaseDexClassLoaderHookHelper.patchClassLoader(classLoader, new File(item.getPluginPath()), dexOutputDir);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Log.d("plugin.log", "patchClassLoader e =>" + e);
+//            }
         }
         try {
             Class<?> loadApkClazz = Class.forName("android.app.LoadedApk");

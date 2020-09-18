@@ -63,6 +63,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:text="跳转至TargetActivity(未注册)" />
+
+        <Button
+            android:id="@+id/btn_start_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="启动普通Service" />
+
+        <Button
+            android:id="@+id/btn_hook_ams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Hook ActivityManagerService" />
+
+        <Button
+            android:id="@+id/btn_start_plugin_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="启动插件service" />
     </LinearLayout>
 
 </ScrollView>
